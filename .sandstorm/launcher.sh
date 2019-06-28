@@ -39,21 +39,21 @@ HOME=/etc/mysql /usr/bin/mysql_install_db --force
 
 # Spawn mysqld, php
 HOME=/etc/mysql /usr/sbin/mysqld &
-/usr/sbin/php-fpm7.0 --nodaemonize --fpm-config /etc/php/7.0/fpm/php-fpm.conf &
+/usr/sbin/php-fpm7.2 --nodaemonize --fpm-config /etc/php/7.2/fpm/php-fpm.conf &
 # Wait until mysql and php have bound their sockets, indicating readiness
 while [ ! -e /var/run/mysqld/mysqld.sock ] ; do
     echo "waiting for mysql to be available at /var/run/mysqld/mysqld.sock"
     sleep .5
 done
-while [ ! -e /var/run/php7.0-fpm.sock ] ; do
-    echo "waiting for php7.0-fpm to be available at /var/run/php7.0-fpm.sock"
+while [ ! -e /var/run/php7.2-fpm.sock ] ; do
+    echo "waiting for php7.2-fpm to be available at /var/run/php7.2-fpm.sock"
     sleep .5
 done
 
 
 echo "Installing database.."
 # Install database for jorani
-echo "CREATE DATABASE IF NOT EXISTS lms; GRANT ALL on lms.* TO 'lms'@'localhost' IDENTIFIED BY 'lms';use lms;source /opt/app/sql/lms.sql;
+echo "CREATE DATABASE IF NOT EXISTS jorani; GRANT ALL on jorani.* TO 'jorani'@'localhost' IDENTIFIED BY 'jorani';use jorani;source /opt/app/sql/jorani.sql;
 " | mysql -u root
 mysql --print-defaults
 echo "Done!"
